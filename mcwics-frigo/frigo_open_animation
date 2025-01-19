@@ -8,11 +8,11 @@ def run_animation():
     pygame.display.set_caption('Title')
     clock = pygame.time.Clock()
     test_font = pygame.font.Font(None, 50)
-    back_surface = pygame.image.load('background2.jpg')
+    back_surface = pygame.image.load('back.jpg')
     #ground_surface = pygame.image.load('ground.jpg')
     #text_surface = test_font.render('FRIGO', False, 'Blue')
 
-    avatar = pygame.image.load('3.png').convert_alpha()
+    avatar = pygame.image.load('frigo.png').convert_alpha()
     WHITE= (0,0,0)
     over = pygame.display.set_mode((1000,800))
 
@@ -32,8 +32,8 @@ def run_animation():
             pygame.display.update()
             pygame.time.delay(5)
 
-    def redrawWindow():
-        over.fill((255,255,255))
+    #def redrawWindow():
+        #over.fill((255,255,255))
 
 
     animation_list = []

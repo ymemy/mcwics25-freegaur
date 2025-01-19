@@ -22,13 +22,13 @@ def fade(width, height):
     fade.fill((255, 255, 255))
     for alpha in range(0, 255):
         fade.set_alpha(alpha)
-        redrawWindow()
+        #redrawWindow()
         screen.blit(fade, (0, 0))
         pygame.display.update()
         pygame.time.delay(5)
 
-def redrawWindow():
-    screen.fill((255, 255, 255))
+#def redrawWindow():
+    #screen.fill((255, 255, 255))
 
 animation_list = []
 animation_steps = 3

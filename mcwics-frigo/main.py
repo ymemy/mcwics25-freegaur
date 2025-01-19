@@ -25,6 +25,8 @@ font = pygame.font.Font('freesansbold.ttf', 18)
 
 pygame.display.set_caption("Food for Thought")
 
+instruction_txt = pygame.image.load('images/img/instructions.png')
+
 buttons_1 = load_fridge(level1_items)
 buttons_2 = load_fridge(level2_items)
 buttons_3 = load_fridge(level3_items)
@@ -69,6 +71,7 @@ while run:
 
     ## INSTRUCTIONS STATE ##
     elif state == "INSTRUCTIONS":
+        screen.blit(instruction_txt, (0,0))
         pass
 
     ## LEVEL 1 ##

@@ -1,5 +1,5 @@
 import pygame
-from plateitems import nextButton
+from helper import nextButton
 
 WIDTH = 723
 HEIGHT = 800
