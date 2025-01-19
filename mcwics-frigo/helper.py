@@ -1,15 +1,13 @@
 import pygame
-from config import *
 from plateitems import Bar
+
+screen = pygame.display.set_mode([723, 800])
 
 def display_text(text, x, y):
     text_surface = pygame.font.Font('freesansbold.ttf', 18).render(text, True, (0, 0, 0))
     screen.blit(text_surface, (x, y))
 
-def points_transition(lst: Bar):
-    global state, level, coins
-    points_text = pygame.font.Font('freesansbold.ttf', 18).render(f"Points: {coins}", True, 'black')
-
+def points_transitions(screen, lst: Bar, font, coins:int):
     vegCount, wholeGrainsCount, proteinCount = 0, 0, 0
 
     for item in lst.items: 
@@ -24,11 +22,7 @@ def points_transition(lst: Bar):
     wholeGrainsPerc = wholeGrainsCount / 4
     proteinPerc = proteinCount / 4
 
-    percentages = []
-    percentages.append(vegPerc)
-    percentages.append(wholeGrainsPerc)
-    percentages.append(proteinPerc) 
-
+    percentages = [vegPerc, wholeGrainsPerc, proteinPerc]
     ideal_perc = [0.5, 0.25, 0.25]
 
     for i in range(3):
@@ -36,6 +30,8 @@ def points_transition(lst: Bar):
             coins += 3
         elif ideal_perc[i] - 0.2 <= percentages[i] <= ideal_perc[i] + 0.2:
             coins += 1
+    
+    return coins, percentages
 
 
 class itemButton():
@@ -88,8 +84,8 @@ class nextButton():
         #self.image = pygame.transform.scale(self.image, (60, 60))
         self.x_pos = x_pos
         self.y_pos = y_pos
-
-    def draw(self,screen):
+        
+    def draw(self, screen):
         button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
         screen.blit(self.image, button_rect)
 
