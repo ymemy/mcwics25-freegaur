@@ -25,9 +25,6 @@ font = pygame.font.Font('freesansbold.ttf', 18)
 
 pygame.display.set_caption("Food for Thought")
 
-instruction_txt = pygame.image.load('images/img/instructions.png')
-start_button = nextButton('images/img/BUTTON copy.png', (0,0))
-
 buttons_1 = load_fridge(level1_items)
 buttons_2 = load_fridge(level2_items)
 buttons_3 = load_fridge(level3_items)
@@ -36,8 +33,34 @@ bar_1 = Bar(4)
 bar_2 = Bar(6)
 bar_3 = Bar(8)
 
+screen = pygame.display.set_mode((723, 800))
+clock = pygame.time.Clock()
+test_font = pygame.font.Font(None, 50)
+back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
+buttons = nextButton('images/img/BUTTON copy.png',0,0)
+start_button = nextButton('image/img/start_butt.png',0,0)
+avatar = pygame.image.load('images/img/final.png').convert_alpha()
+instruction_txt = pygame.image.load('images/img/instructions.png')
+WHITE= (0,0,0)
+
+def get_image(sheet,frame,width,height,colour):
+    #image = pygame.Surface((width, height)).convert_alpha()
+    image = pygame.Surface((width, height)).convert_alpha()
+    image.blit(sheet, (0, 0), ((frame * width),0,width,height))
+    image.set_colorkey(colour)
+    return image
+        
+animation_list = []
+animation_steps = 2
+last_update = pygame.time.get_ticks()
+animation_cooldown = 200
+frame = 0
+
+for x in range(animation_steps):
+    animation_list.append(get_image(avatar,x,140, 355, WHITE))
+
 run = True
-state = "FRIGO_OPEN"
+state = "MENU"
 level = 1
 coins = 0
 finished = False
@@ -48,71 +71,42 @@ while run:
 
     ## MENU STATE ##
     if state == "MENU":
-        screen = pygame.display.set_mode((723, 800))
-        pygame.display.set_caption('game')
-        clock = pygame.time.Clock()
-        test_font = pygame.font.Font(None, 50)
-        back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
-        #ground_surface = pygame.image.load('ground.jpg')
-        #text_surface = test_font.render('FRIGO', False, 'Blue')
-        start_button = nextButton('images/img/BUTTON copy.png',0,0)
+        screen.blit(back_surface,(0,0)) 
+        screen.blit(start_button, (0,0))
+        start_button.draw()
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.check_click():
+                    #file called frigo_open_animations starts running 
+                    state = "INSTRUCTIONS"
+        #screen.blit(ground_surface,(0,0))
 
-        avatar = pygame.image.load('images/img/final.png').convert_alpha()
-        WHITE= (0,0,0)
+        #display image
+        #update animation
+        current_time = pygame.time.get_ticks()
+        if current_time - last_update >= animation_cooldown:
+            frame += 1
+            last_update = current_time
+            if frame >= len(animation_list):
+                frame = 0
 
-        def get_image(sheet,frame,width,height,colour):
-            #image = pygame.Surface((width, height)).convert_alpha()
-            image = pygame.Surface((width, height)).convert_alpha()
-            image.blit(sheet, (0, 0), ((frame * width),0,width,height))
-            image.set_colorkey(colour)
-            return image
-                
-        animation_list = []
-        animation_steps = 2
-        last_update = pygame.time.get_ticks()
-        animation_cooldown = 200
-        frame = 0
+        screen.blit(animation_list[frame], (400,500))
 
-        for x in range(animation_steps):
-            animation_list.append(get_image(avatar,x,140, 355, WHITE))
-        while True:
-            start_button.draw()
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if start_button.check_click():
-                        #file called frigo_open_animations starts running 
-                        state = "INSTRUCTIONS"
-            #screen.blit(ground_surface,(0,0))
-            screen.blit(back_surface,(0,0)) 
-            screen.blit(start_button, (0,0))
+        #screen.blit(text_surface,(230,50))
 
-            #display image
-            #update animation
-            current_time = pygame.time.get_ticks()
-            if current_time - last_update >= animation_cooldown:
-                frame += 1
-                last_update = current_time
-                if frame >= len(animation_list):
-                    frame = 0
-
-            screen.blit(animation_list[frame], (400,500))
-
-            #screen.blit(text_surface,(230,50))
-
-            pygame.display.update()
-            clock.tick(60)
-            #points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
-            #screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
+        #pygame.display.update()
+        #clock.tick(60)
+        #points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
+        #screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
 
     ## INSTRUCTIONS STATE ##
     elif state == "INSTRUCTIONS":
         screen.blit(instruction_txt, (0,0))
         state = "FRIGO_OPEN"
-        pass
 
     ## FRIGO OPEN ##
     elif state == "FRIGO_OPEN":
@@ -130,10 +124,8 @@ while run:
                 screen.blit(animation_list[frame], (107, 0))
             else:
                 screen.fill((255, 255, 255))
-                start_button.draw(screen)
         else:
             state = "LEVEL_1"
-            start_button.draw(screen)
 
     ## LEVEL 1 ##
     if state == "LEVEL_1":
