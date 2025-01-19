@@ -35,10 +35,11 @@ bar_3 = Bar(8)
 
 screen = pygame.display.set_mode((723, 800))
 clock = pygame.time.Clock()
+
 test_font = pygame.font.Font(None, 50)
 back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
-buttons = nextButton('images/img/BUTTON copy.png',0,0)
-start_button = nextButton('image/img/start_butt.png',0,0)
+buttons = pygame.image.load('images/img/BUTTON copy.png')
+start_button = nextButton('images/img/start_butt.png',0,0)
 avatar = pygame.image.load('images/img/final.png').convert_alpha()
 instruction_txt = pygame.image.load('images/img/instructions.png')
 WHITE= (0,0,0)
@@ -72,8 +73,8 @@ while run:
     ## MENU STATE ##
     if state == "MENU":
         screen.blit(back_surface,(0,0)) 
-        screen.blit(start_button, (0,0))
-        start_button.draw()
+        screen.blit(buttons, (0,0))
+        start_button.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
