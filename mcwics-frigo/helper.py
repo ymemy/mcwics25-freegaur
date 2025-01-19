@@ -89,7 +89,7 @@ class nextButton():
         self.x_pos = x_pos
         self.y_pos = y_pos
 
-    def draw(self):
+    def draw(self,screen):
         button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
         screen.blit(self.image, button_rect)
 

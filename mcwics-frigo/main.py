@@ -99,7 +99,7 @@ while run:
 
         #screen.blit(text_surface,(230,50))
 
-        #pygame.display.update()
+        pygame.display.update()
         #clock.tick(60)
         #points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
         #screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
@@ -107,6 +107,7 @@ while run:
     ## INSTRUCTIONS STATE ##
     elif state == "INSTRUCTIONS":
         screen.blit(instruction_txt, (0,0))
+
         state = "FRIGO_OPEN"
 
     ## FRIGO OPEN ##
