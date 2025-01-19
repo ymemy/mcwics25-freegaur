@@ -21,7 +21,7 @@ level1_items = {
     "lettuce": {"type": "veggies", "file": "images/fridge_items/lettuce.png", "position": (160, 370)},
 
     "bread": {"type": "wholeGrains", "file": "images/fridge_items/bread.png", "position": (220, 375)},
-    "oats": {"type": "wholeGrains", "file": "images/fridge_items/oats2.png", "position": (275, 370)},
+    "oats": {"type": "wholeGrains", "file": "images/fridge_items/oats.png", "position": (275, 370)},
 
     "tofu": {"type": "protein", "file": "images/fridge_items/tofu.png", "position": (180, 460)},
     "ham": {"type": "protein", "file": "images/fridge_items/ham.png", "position": (250, 460)}
@@ -34,11 +34,11 @@ level2_items = {
     "orange": {"type": "veggies", "file": "images/fridge_items/orange.png", "position": (220, 275)},
     "cucumber": {"type": "veggies", "file": "images/fridge_items/cucumber.png", "position": (275, 270)},
     "lettuce": {"type": "veggies", "file": "images/fridge_items/lettuce.png", "position": (160, 370)},
-    "strawberry": {"type": "veggies", "file": "images/fridge_items/strawberry.png", "position": (220, 375)},
+    "strawberry": {"type": "veggies", "file": "images/fridge_items/strawberry.png", "position": (220, 370)},
     "tomato": {"type": "veggies", "file": "images/fridge_items/tomato.png", "position": (275, 370)},
 
     "bread": {"type": "wholeGrains", "file": "images/fridge_items/bread.png", "position": (180, 460)},
-    "oats": {"type": "wholeGrains", "file": "images/fridge_items/oats2.png", "position": (250, 460)},
+    "oats": {"type": "wholeGrains", "file": "images/fridge_items/oats.png", "position": (250, 460)},
     "brown rice": {"type": "wholeGrains", "file": "images/fridge_items/brownrice.png", "position": (420, 270)},
 
     "tofu": {"type": "protein", "file": "images/fridge_items/tofu.png", "position": (500, 270)},
@@ -53,12 +53,12 @@ level3_items = {
     "orange": {"type": "veggies", "file": "images/fridge_items/orange.png", "position": (220, 275)},
     "cucumber": {"type": "veggies", "file": "images/fridge_items/cucumber.png", "position": (275, 270)},
     "lettuce": {"type": "veggies", "file": "images/fridge_items/lettuce.png", "position": (160, 370)},
-    "strawberry": {"type": "veggies", "file": "images/fridge_items/strawberry.png", "position": (220, 375)},
+    "strawberry": {"type": "veggies", "file": "images/fridge_items/strawberry.png", "position": (220, 370)},
     "tomato": {"type": "veggies", "file": "images/fridge_items/tomato.png", "position": (275, 370)},
     "carrot": {"type": "veggies", "file": "images/fridge_items/carrot.png", "position": (275, 465)},
 
     "bread": {"type": "wholeGrains", "file": "images/fridge_items/bread.png", "position": (160, 465)},
-    "oats": {"type": "wholeGrains", "file": "images/fridge_items/oats2.png", "position": (220, 465)},
+    "oats": {"type": "wholeGrains", "file": "images/fridge_items/oats.png", "position": (220, 465)},
     "brown rice": {"type": "wholeGrains", "file": "images/fridge_items/brownrice.png", "position": (400, 270)},
     "quinoa": {"type": "wholeGrains", "file": "images/fridge_items/quinoa.png", "position": (460, 370)},
 

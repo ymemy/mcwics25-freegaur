@@ -17,7 +17,7 @@ bar_2 = Bar(6)
 bar_3 = Bar(8)
 
 run = True
-state = "LEVEL_1"
+state = "LEVEL_3"
 level = 1
 coins = 0
 finished = False

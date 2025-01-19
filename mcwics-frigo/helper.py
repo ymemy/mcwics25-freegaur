@@ -62,7 +62,7 @@ class itemButton():
         left_click = pygame.mouse.get_pressed()[0]
         button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
         if left_click and button_rect.collidepoint(mouse_pos):
-            self.status = not self.status
+            #self.status = not self.status
             return True
         return False
         
