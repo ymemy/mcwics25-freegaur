@@ -9,7 +9,7 @@ screen = pygame.display.set_mode([WIDTH, HEIGHT])
 fps = 60
 timer = pygame.time.Clock()
 
-next_button = nextButton("images/img/NB.png", 640, 300)
+next_button = nextButton("images/img/NB.png", 610, 300)
 
 
 ## LEVEL 1
