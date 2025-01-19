@@ -17,7 +17,7 @@ bar_2 = Bar(6)
 bar_3 = Bar(8)
 
 run = True
-state = "LEVEL_3"
+state = "MENU"
 level = 1
 coins = 0
 finished = False
@@ -38,10 +38,6 @@ buttons_1 = load_fridge(level1_items)
 buttons_2 = load_fridge(level2_items)
 buttons_3 = load_fridge(level3_items)
 
-bar_1 = Bar(4)
-bar_2 = Bar(6)
-bar_3 = Bar(8)
-
 screen = pygame.display.set_mode((723, 800))
 clock = pygame.time.Clock()
 
@@ -50,11 +46,9 @@ back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
 inst_back_surface = pygame.image.load('images/img/background2.jpg')
 buttons = pygame.image.load('images/img/BUTTON copy.png')
 start_button = nextButton('images/img/start_butt.png',0, 0)
-next_button2 = nextButton('images/img/NB.png',610, 300)
 
 avatar = pygame.image.load('images/img/final.png').convert_alpha()
 instruction_txt = pygame.image.load('images/img/inst.png')
-WHITE= (0,0,0)
 
 def get_image(sheet,frame,width,height,colour):
     #image = pygame.Surface((width, height)).convert_alpha()
@@ -73,12 +67,6 @@ frame_doll = 0
 for x in range(animation_steps_doll):
     animation_list_doll.append(get_image(avatar,x,140, 355, WHITE))
 
-
-run = True
-state = "MENU"
-level = 1
-coins = 0
-finished = False
 instruction_txt = pygame.image.load('images/img/inst.png')
 
 def points_transition(lst: Bar):
@@ -111,6 +99,7 @@ while run:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.check_click():
                     #file called frigo_open_animations starts running 
+                    pop_sound.play()
                     state = "INSTRUCTIONS"
         #screen.blit(ground_surface,(0,0))
 
@@ -128,12 +117,13 @@ while run:
     elif state == "INSTRUCTIONS":
         screen.blit(inst_back_surface, (0,0))
         screen.blit(instruction_txt, (0,0))
-        next_button2.draw(screen)
+        next_button.draw(screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if next_button2.check_click():
+                if next_button.check_click():
+                     pop_sound.play()
                      state = "FRIGO_OPEN"
 
     ## FRIGO OPEN ##
@@ -167,6 +157,12 @@ while run:
         bar_1.draw(screen)
         next_button.draw(screen)
 
+        level_text = pygame.font.Font('freesansbold.ttf', 18).render("LEVEL 1: 4 items", True, 'black')
+        text_rect = level_text.get_rect()
+        text_rect.centerx = screen.get_width() // 2 
+        text_rect.top = 45
+        screen.blit(level_text, text_rect)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -193,6 +189,12 @@ while run:
         bar_2.draw(screen)
         next_button.draw(screen)
 
+        level_text = pygame.font.Font('freesansbold.ttf', 18).render("LEVEL 2: 6 items", True, 'black')
+        text_rect = level_text.get_rect()
+        text_rect.centerx = screen.get_width() // 2 
+        text_rect.top = 45
+        screen.blit(level_text, text_rect)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -218,6 +220,12 @@ while run:
         
         bar_3.draw(screen)
         next_button.draw(screen)
+
+        level_text = pygame.font.Font('freesansbold.ttf', 18).render("LEVEL 3: 8 items", True, 'black')
+        text_rect = level_text.get_rect()
+        text_rect.centerx = screen.get_width() // 2 
+        text_rect.top = 45
+        screen.blit(level_text, text_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -250,7 +258,7 @@ while run:
         protein_text = font.render(f"Protein: {percentages[2] * 100:.2f}%", True, (0, 0, 0))
 
         veg_rect = veg_text.get_rect(center=(screen.get_width() // 2 + 100, screen.get_height() // 2 + 90))
-        grains_rect = grains_text.get_rect(center=(screen.get_width() // 2 + 110, screen.get_height() // 2 + 130))
+        grains_rect = grains_text.get_rect(center=(screen.get_width() // 2 + 100, screen.get_height() // 2 + 130))
         protein_rect = protein_text.get_rect(center=(screen.get_width() // 2 + 100, screen.get_height() // 2 + 170))
 
         screen.blit(veg_text, veg_rect)
@@ -264,7 +272,6 @@ while run:
                 if next_button.check_click():
                     pop_sound.play()
                     if level == 3:
-                        print("Game over")
                         state = "GAME_OVER"
                     else:
                         state = f"LEVEL_{level + 1}"
@@ -279,6 +286,16 @@ while run:
         screen.blit(points_text, text_rect)
 
         next_button.draw(screen)
+        bar_1.items.clear()
+        bar_2.items.clear()
+        bar_3.items.clear()
+
+        for button in buttons_1:
+            button.state = False
+        for button in buttons_2:
+            button.state = False
+        for button in buttons_3:
+            button.state = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -286,6 +303,15 @@ while run:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if next_button.check_click():
                     pop_sound.play()
+
+                    level = 1
+                    coins = 0
+                    finished = False
+                    percentages = []
+                    buttons_1 = load_fridge(level1_items)
+                    buttons_2 = load_fridge(level2_items)
+                    buttons_3 = load_fridge(level3_items)
+
                     state = "MENU"
     
     pygame.display.flip()
