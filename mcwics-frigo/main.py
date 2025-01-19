@@ -50,8 +50,7 @@ back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
 inst_back_surface = pygame.image.load('images/img/background2.jpg')
 buttons = pygame.image.load('images/img/BUTTON copy.png')
 start_button = nextButton('images/img/start_butt.png',0, 0)
-step =  pygame.transform.scale('images/menu_buttons/next.png', (200, 200))
-next_button2 = nextButton(step, 0, 0)
+next_button2 = nextButton('images/img/NB.png',570, 300)
 
 avatar = pygame.image.load('images/img/final.png').convert_alpha()
 instruction_txt = pygame.image.load('images/img/inst.png')
@@ -63,15 +62,17 @@ def get_image(sheet,frame,width,height,colour):
     image.blit(sheet, (0, 0), ((frame * width),0,width,height))
     image.set_colorkey(colour)
     return image
-        
-animation_list = []
-animation_steps = 2
-last_update = pygame.time.get_ticks()
-animation_cooldown = 200
-frame = 0
 
-for x in range(animation_steps):
-    animation_list.append(get_image(avatar,x,140, 355, WHITE))
+#doll animation
+animation_list_doll = []
+animation_steps_doll = 2
+last_update_doll = pygame.time.get_ticks()
+animation_cooldown_doll = 200
+frame_doll = 0
+
+for x in range(animation_steps_doll):
+    animation_list_doll.append(get_image(avatar,x,140, 355, WHITE))
+
 
 run = True
 state = "MENU"
@@ -95,13 +96,13 @@ while run:
         start_button.draw(screen)
 
         current_time = pygame.time.get_ticks()
-        if current_time - last_update >= animation_cooldown:
-            frame += 1
-            last_update = current_time
-            if frame >= len(animation_list):
-                frame = 0
+        if current_time - last_update_doll >= animation_cooldown_doll:
+            frame_doll += 1
+            last_update_doll = current_time
+            if frame_doll >= len(animation_list_doll):
+                frame_doll = 0
 
-        screen.blit(animation_list[frame], (400,500))
+        screen.blit(animation_list_doll[frame_doll], (400,500))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -132,7 +133,7 @@ while run:
             if event.type == pygame.QUIT:
                 run = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if next_button.check_click():
+                if next_button2.check_click():
                      state = "FRIGO_OPEN"
 
     ## FRIGO OPEN ##
@@ -147,11 +148,12 @@ while run:
                 if frame >= len(animation_list):
                     animation_playing = False
                     fade(723, 800)
-            #if animation_playing:
+            if animation_playing:
                 screen.blit(animation_list[frame], (107, 0))
-            #else:
+            else:
                 screen.fill((255, 255, 255))
         else:
+            pygame.display.update()
             state = "LEVEL_1"
 
     ## LEVEL 1 ##
