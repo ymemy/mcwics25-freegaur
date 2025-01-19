@@ -48,9 +48,65 @@ while run:
 
     ## MENU STATE ##
     if state == "MENU":
-        points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
-        screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
-        state = "INSTRUCTIONS"
+        screen = pygame.display.set_mode((723, 800))
+        pygame.display.set_caption('game')
+        clock = pygame.time.Clock()
+        test_font = pygame.font.Font(None, 50)
+        back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
+        #ground_surface = pygame.image.load('ground.jpg')
+        #text_surface = test_font.render('FRIGO', False, 'Blue')
+        start_button = nextButton('images/img/BUTTON copy.png',0,0)
+
+
+        avatar = pygame.image.load('images/img/final.png').convert_alpha()
+        WHITE= (0,0,0)
+
+        def get_image(sheet,frame,width,height,colour):
+            #image = pygame.Surface((width, height)).convert_alpha()
+            image = pygame.Surface((width, height)).convert_alpha()
+            image.blit(sheet, (0, 0), ((frame * width),0,width,height))
+            image.set_colorkey(colour)
+            return image
+                
+        animation_list = []
+        animation_steps = 2
+        last_update = pygame.time.get_ticks()
+        animation_cooldown = 200
+        frame = 0
+
+        for x in range(animation_steps):
+            animation_list.append(get_image(avatar,x,140, 355, WHITE))
+        while True:
+            start_button.draw()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if start_button.check_click():
+                        #file called frigo_open_animations starts running 
+                        state = "INSTRUCTIONS"
+            #screen.blit(ground_surface,(0,0))
+            screen.blit(back_surface,(0,0)) 
+            screen.blit(start_button, (0,0))
+
+            #display image
+            #update animation
+            current_time = pygame.time.get_ticks()
+            if current_time - last_update >= animation_cooldown:
+                frame += 1
+                last_update = current_time
+                if frame >= len(animation_list):
+                    frame = 0
+
+            screen.blit(animation_list[frame], (400,500))
+
+            #screen.blit(text_surface,(230,50))
+
+            pygame.display.update()
+            clock.tick(60)
+            #points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
+            #screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
 
     ## INSTRUCTIONS STATE ##
     elif state == "INSTRUCTIONS":
