@@ -26,6 +26,7 @@ font = pygame.font.Font('freesansbold.ttf', 18)
 pygame.display.set_caption("Food for Thought")
 
 instruction_txt = pygame.image.load('images/img/instructions.png')
+start_button = nextButton('images/img/BUTTON copy.png', (0,0))
 
 buttons_1 = load_fridge(level1_items)
 buttons_2 = load_fridge(level2_items)
@@ -45,8 +46,18 @@ while run:
     screen.fill('white')
     timer.tick(fps)
 
+    ## MENU STATE ##
+    if state == "MENU":
+        points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
+        screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
+
+    ## INSTRUCTIONS STATE ##
+    elif state == "INSTRUCTIONS":
+        screen.blit(instruction_txt, (0,0))
+        pass
+
     ## FRIGO OPEN ##
-    if state == "FRIGO_OPEN":
+    elif state == "FRIGO_OPEN":
         # Display animation frames
         if animation_playing:
             screen.blit(back_surface, (0, 0))
@@ -61,18 +72,10 @@ while run:
                 screen.blit(animation_list[frame], (107, 0))
             else:
                 screen.fill((255, 255, 255))
+                start_button.draw(screen)
         else:
             state = "MENU"
-
-    ## MENU STATE ##
-    elif state == "MENU":
-        points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
-        screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
-
-    ## INSTRUCTIONS STATE ##
-    elif state == "INSTRUCTIONS":
-        screen.blit(instruction_txt, (0,0))
-        pass
+            start_button.draw(screen)
 
     ## LEVEL 1 ##
     if state == "LEVEL_1":
