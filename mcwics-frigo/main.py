@@ -152,8 +152,9 @@ while run:
                 screen.blit(animation_list[frame], (107, 0))
             else:
                 screen.fill((255, 255, 255))
-        else:
             pygame.display.update()
+            clock.tick(60)
+        else:
             state = "LEVEL_1"
 
     ## LEVEL 1 ##

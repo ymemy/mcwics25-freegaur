@@ -25,7 +25,7 @@ def fade(width, height):
         #redrawWindow()
         screen.blit(fade, (0, 0))
         pygame.display.update()
-        pygame.time.delay(5)
+        pygame.time.delay(4)
 
 #def redrawWindow():
     #screen.fill((255, 255, 255))
