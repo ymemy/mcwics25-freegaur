@@ -25,7 +25,7 @@ def fade(width, height):
         #redrawWindow()
         screen.blit(fade, (0, 0))
         pygame.display.update()
-        pygame.time.delay(5)
+        pygame.time.delay(4)
 
 #def redrawWindow():
     #screen.fill((255, 255, 255))
@@ -36,11 +36,11 @@ last_update = pygame.time.get_ticks()
 animation_cooldown = 500
 frame = 0
 
-avatar = pygame.image.load('images/img/3.png').convert_alpha()
+FRIGO = pygame.image.load('images/img/3.png').convert_alpha()
 back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
 
 for x in range(animation_steps):
-    animation_list.append(get_image(avatar, x, 257, 690, WHITE))
+    animation_list.append(get_image(FRIGO, x, 257, 690, WHITE))
 
 animation_playing = True
 
