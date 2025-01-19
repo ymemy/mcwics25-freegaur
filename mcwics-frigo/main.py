@@ -50,7 +50,7 @@ back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
 inst_back_surface = pygame.image.load('images/img/background2.jpg')
 buttons = pygame.image.load('images/img/BUTTON copy.png')
 start_button = nextButton('images/img/start_butt.png',0, 0)
-next_button2 = nextButton('images/img/NB.png',570, 300)
+next_button2 = nextButton('images/img/NB.png',610, 300)
 
 avatar = pygame.image.load('images/img/final.png').convert_alpha()
 instruction_txt = pygame.image.load('images/img/inst.png')
