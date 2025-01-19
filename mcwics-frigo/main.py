@@ -41,7 +41,7 @@ back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
 buttons = pygame.image.load('images/img/BUTTON copy.png')
 start_button = nextButton('images/img/start_butt.png',0, 0)
 avatar = pygame.image.load('images/img/final.png').convert_alpha()
-instruction_txt = pygame.image.load('images/img/instructions.png')
+instruction_txt = pygame.image.load('images/img/inst.png')
 WHITE= (0,0,0)
 
 def get_image(sheet,frame,width,height,colour):
@@ -76,6 +76,15 @@ while run:
         screen.blit(buttons, (0,0))
         start_button.draw(screen)
 
+        current_time = pygame.time.get_ticks()
+        if current_time - last_update >= animation_cooldown:
+            frame += 1
+            last_update = current_time
+            if frame >= len(animation_list):
+                frame = 0
+
+        screen.blit(animation_list[frame], (400,500))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -88,14 +97,6 @@ while run:
 
         #display image
         #update animation
-        current_time = pygame.time.get_ticks()
-        if current_time - last_update >= animation_cooldown:
-            frame += 1
-            last_update = current_time
-            if frame >= len(animation_list):
-                frame = 0
-
-        screen.blit(animation_list[frame], (400,500))
 
         #screen.blit(text_surface,(230,50))
 
@@ -107,8 +108,13 @@ while run:
     ## INSTRUCTIONS STATE ##
     elif state == "INSTRUCTIONS":
         screen.blit(instruction_txt, (0,0))
-
-        state = "FRIGO_OPEN"
+        next_button.draw()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if next_button.check_click():
+                     state = "FRIGO_OPEN"
 
     ## FRIGO OPEN ##
     elif state == "FRIGO_OPEN":
@@ -122,9 +128,9 @@ while run:
                 if frame >= len(animation_list):
                     animation_playing = False
                     fade(723, 800)
-            if animation_playing:
+            #if animation_playing:
                 screen.blit(animation_list[frame], (107, 0))
-            else:
+            #else:
                 screen.fill((255, 255, 255))
         else:
             state = "LEVEL_1"
