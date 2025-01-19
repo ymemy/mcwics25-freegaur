@@ -2,11 +2,12 @@ import pygame
 from config import *
 
 class itemButton():
-    def __init__(self, text, image, x_pos, y_pos, status=False):
+    def __init__(self, text, image, x_pos, y_pos, foodtype, status=False):
         self.text = text
         self.image = image
         self.x_pos = x_pos
         self.y_pos = y_pos
+        self.foodtype = foodtype
         self.status = status
 
     def draw(self): 
@@ -46,13 +47,14 @@ class itemButton():
 
 class nextButton():
     def __init__(self, image, x_pos, y_pos):
-        self.image = image
+        self.image = pygame.image.load(image)
+        self.image = pygame.transform.scale(self.image, (60, 60))
         self.x_pos = x_pos
         self.y_pos = y_pos
 
     def draw(self):
         button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
-        pygame.draw.rect(screen, 'black', button_rect, 0, 5)
+        screen.blit(self.image, button_rect)
 
     def check_click(self):
         mouse_pos = pygame.mouse.get_pos()
