@@ -50,10 +50,12 @@ while run:
     if state == "MENU":
         points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
         screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
+        state = "INSTRUCTIONS"
 
     ## INSTRUCTIONS STATE ##
     elif state == "INSTRUCTIONS":
         screen.blit(instruction_txt, (0,0))
+        state = "FRIGO_OPEN"
         pass
 
     ## FRIGO OPEN ##
@@ -74,7 +76,7 @@ while run:
                 screen.fill((255, 255, 255))
                 start_button.draw(screen)
         else:
-            state = "MENU"
+            state = "LEVEL_1"
             start_button.draw(screen)
 
     ## LEVEL 1 ##
