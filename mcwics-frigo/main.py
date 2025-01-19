@@ -33,7 +33,52 @@ pop_sound = pygame.mixer.Sound('music/pop.mp3')
 
 font = pygame.font.Font('freesansbold.ttf', 18)
 pygame.display.set_caption("Food for Thought")
-instruction_txt = pygame.image.load('images/img/instructions.png')
+
+buttons_1 = load_fridge(level1_items)
+buttons_2 = load_fridge(level2_items)
+buttons_3 = load_fridge(level3_items)
+
+bar_1 = Bar(4)
+bar_2 = Bar(6)
+bar_3 = Bar(8)
+
+screen = pygame.display.set_mode((723, 800))
+clock = pygame.time.Clock()
+
+test_font = pygame.font.Font(None, 50)
+back_surface = pygame.image.load('images/img/BACKGROUNDDDD.jpg')
+inst_back_surface = pygame.image.load('images/img/background2.jpg')
+buttons = pygame.image.load('images/img/BUTTON copy.png')
+start_button = nextButton('images/img/start_butt.png',0, 0)
+step =  pygame.transform.scale('images/menu_buttons/next.png', (200, 200))
+next_button2 = nextButton(step, 0, 0)
+
+avatar = pygame.image.load('images/img/final.png').convert_alpha()
+instruction_txt = pygame.image.load('images/img/inst.png')
+WHITE= (0,0,0)
+
+def get_image(sheet,frame,width,height,colour):
+    #image = pygame.Surface((width, height)).convert_alpha()
+    image = pygame.Surface((width, height)).convert_alpha()
+    image.blit(sheet, (0, 0), ((frame * width),0,width,height))
+    image.set_colorkey(colour)
+    return image
+        
+animation_list = []
+animation_steps = 2
+last_update = pygame.time.get_ticks()
+animation_cooldown = 200
+frame = 0
+
+for x in range(animation_steps):
+    animation_list.append(get_image(avatar,x,140, 355, WHITE))
+
+run = True
+state = "MENU"
+level = 1
+coins = 0
+finished = False
+instruction_txt = pygame.image.load('images/img/inst.png')
 
 def points_transition(lst: Bar):
     global state, level, coins, percentages
@@ -43,8 +88,55 @@ while run:
     screen.fill('white')
     timer.tick(fps)
 
+    ## MENU STATE ##
+    if state == "MENU":
+        screen.blit(back_surface,(0,0)) 
+        screen.blit(buttons, (0,0))
+        start_button.draw(screen)
+
+        current_time = pygame.time.get_ticks()
+        if current_time - last_update >= animation_cooldown:
+            frame += 1
+            last_update = current_time
+            if frame >= len(animation_list):
+                frame = 0
+
+        screen.blit(animation_list[frame], (400,500))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button.check_click():
+                    #file called frigo_open_animations starts running 
+                    state = "INSTRUCTIONS"
+        #screen.blit(ground_surface,(0,0))
+
+        #display image
+        #update animation
+
+        #screen.blit(text_surface,(230,50))
+
+        pygame.display.update()
+        #clock.tick(60)
+        #points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
+        #screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
+
+    ## INSTRUCTIONS STATE ##
+    elif state == "INSTRUCTIONS":
+        screen.blit(inst_back_surface, (0,0))
+        screen.blit(instruction_txt, (0,0))
+        next_button2.draw(screen)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if next_button.check_click():
+                     state = "FRIGO_OPEN"
+
     ## FRIGO OPEN ##
-    if state == "FRIGO_OPEN":
+    elif state == "FRIGO_OPEN":
         # Display animation frames
         if animation_playing:
             screen.blit(back_surface, (0, 0))
@@ -55,22 +147,12 @@ while run:
                 if frame >= len(animation_list):
                     animation_playing = False
                     fade(723, 800)
-            if animation_playing:
+            #if animation_playing:
                 screen.blit(animation_list[frame], (107, 0))
-            else:
+            #else:
                 screen.fill((255, 255, 255))
         else:
-            state = "MENU"
-
-    ## MENU STATE ##
-    elif state == "MENU":
-        points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
-        screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
-
-    ## INSTRUCTIONS STATE ##
-    elif state == "INSTRUCTIONS":
-        screen.blit(instruction_txt, (0,0))
-        pass
+            state = "LEVEL_1"
 
     ## LEVEL 1 ##
     if state == "LEVEL_1":

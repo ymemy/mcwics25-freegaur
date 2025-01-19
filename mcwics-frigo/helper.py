@@ -81,10 +81,10 @@ class itemButton():
 class nextButton():
     def __init__(self, image, x_pos, y_pos):
         self.image = pygame.image.load(image)
-        self.image = pygame.transform.scale(self.image, (60, 60))
+        #self.image = pygame.transform.scale(self.image, (60, 60))
         self.x_pos = x_pos
         self.y_pos = y_pos
-
+        
     def draw(self, screen):
         button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
         screen.blit(self.image, button_rect)
