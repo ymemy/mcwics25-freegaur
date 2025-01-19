@@ -1,11 +1,15 @@
 import pygame
+from plateitems import nextButton
 
 WIDTH = 723
 HEIGHT = 800
 
+WHITE = (0, 0, 0)
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 fps = 60
 timer = pygame.time.Clock()
+
+next_button = nextButton("images/menu_buttons/next.png", (screen.get_width() - 140) // 2, 700)
 
 ## LEVEL 1
 

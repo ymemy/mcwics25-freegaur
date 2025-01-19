@@ -1,53 +1,9 @@
 import pygame
+from sys import exit
 from config import *
 from helper import *
 from plateitems import *
-
-def load_fridge(items: dict): 
-    buttons = [] 
-    for i, (item, details) in enumerate(items.items()): 
-        image = pygame.image.load(details["file"]) 
-        resized_image = pygame.transform.scale(image, (50, 50)) 
-        button = itemButton(item, resized_image, details["position"][0], details["position"][1], details["type"]) 
-        buttons.append(button) 
-    return buttons
-
-def points_transition(lst: Bar):
-    global state, level, coins
-    points_text = font.render(f"Points: {coins}", True, 'black')
-
-    vegCount, wholeGrainsCount, proteinCount = 0, 0, 0
-
-    for item in lst.items: 
-        if item.foodtype == "veggies":
-            vegCount += 1
-        elif item.foodtype == "wholeGrains":
-            wholeGrainsCount += 1
-        elif item.foodtype == "protein":
-            proteinCount += 1
-    
-    vegPerc = vegCount / 4
-    wholeGrainsPerc = wholeGrainsCount / 4
-    proteinPerc = proteinCount / 4
-
-    percentages = []
-    percentages.append(vegPerc)
-    percentages.append(wholeGrainsPerc)
-    percentages.append(proteinPerc) 
-
-    ideal_perc = [0.5, 0.25, 0.25]
-
-    for i in range(3):
-        if percentages[i] == ideal_perc[i]:
-            coins += 3
-        elif ideal_perc[i] - 0.2 <= percentages[i] <= ideal_perc[i] + 0.2:
-            coins += 1
-
-pygame.init()
-
-font = pygame.font.Font('freesansbold.ttf', 18)
-
-pygame.display.set_caption("freegaur")
+from frigohelper import *
 
 buttons_1 = load_fridge(level1_items)
 buttons_2 = load_fridge(level2_items)
@@ -58,17 +14,62 @@ bar_2 = Bar(6)
 bar_3 = Bar(8)
 
 run = True
-state = "LEVEL_1"
+state = "FRIGO_OPEN"
 level = 1
 coins = 0
 finished = False
-next_button = nextButton("images/menu_buttons/next.png", (screen.get_width() - 140) // 2 , 700)
+
+pygame.init()
+
+font = pygame.font.Font('freesansbold.ttf', 18)
+
+pygame.display.set_caption("Food for Thought")
+
+buttons_1 = load_fridge(level1_items)
+buttons_2 = load_fridge(level2_items)
+buttons_3 = load_fridge(level3_items)
+
+bar_1 = Bar(4)
+bar_2 = Bar(6)
+bar_3 = Bar(8)
+
+run = True
+state = "FRIGO_OPEN"
+level = 1
+coins = 0
+finished = False
 
 while run:
     screen.fill('white')
     timer.tick(fps)
 
-    # show score
+    ## FRIGO OPEN ##
+    if state == "FRIGO_OPEN":
+        # Display animation frames
+        if animation_playing:
+            screen.blit(back_surface, (0, 0))
+            current_time = pygame.time.get_ticks()
+            if current_time - last_update >= animation_cooldown:
+                frame += 1
+                last_update = current_time
+                if frame >= len(animation_list):
+                    animation_playing = False
+                    fade(723, 800)
+            if animation_playing:
+                screen.blit(animation_list[frame], (107, 0))
+            else:
+                screen.fill((255, 255, 255))
+        else:
+            state = "MENU"
+
+    ## MENU STATE ##
+    elif state == "MENU":
+        points_text = font.render(f"Coins: {coins}", True, (0, 0, 0))
+        screen.blit(points_text, ((screen.get_width() - 140) // 2, 20))
+
+    ## INSTRUCTIONS STATE ##
+    elif state == "INSTRUCTIONS":
+        pass
 
     ## LEVEL 1 ##
     if state == "LEVEL_1":
@@ -103,10 +104,6 @@ while run:
 
     ## LEVEL 3 ##
     elif state == "LEVEL_3":
-        pass
-
-    ## MENU STATE ##
-    elif state == "MENU":
         pass
 
     ## TRANSITION STATE ##

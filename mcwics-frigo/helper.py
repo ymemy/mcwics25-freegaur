@@ -1,5 +1,42 @@
 import pygame
 from config import *
+from plateitems import Bar
+
+def display_text(text, x, y):
+    text_surface = pygame.font.Font('freesansbold.ttf', 18).render(text, True, (0, 0, 0))
+    screen.blit(text_surface, (x, y))
+
+def points_transition(lst: Bar):
+    global state, level, coins
+    points_text = pygame.font.Font('freesansbold.ttf', 18).render(f"Points: {coins}", True, 'black')
+
+    vegCount, wholeGrainsCount, proteinCount = 0, 0, 0
+
+    for item in lst.items: 
+        if item.foodtype == "veggies":
+            vegCount += 1
+        elif item.foodtype == "wholeGrains":
+            wholeGrainsCount += 1
+        elif item.foodtype == "protein":
+            proteinCount += 1
+    
+    vegPerc = vegCount / 4
+    wholeGrainsPerc = wholeGrainsCount / 4
+    proteinPerc = proteinCount / 4
+
+    percentages = []
+    percentages.append(vegPerc)
+    percentages.append(wholeGrainsPerc)
+    percentages.append(proteinPerc) 
+
+    ideal_perc = [0.5, 0.25, 0.25]
+
+    for i in range(3):
+        if percentages[i] == ideal_perc[i]:
+            coins += 3
+        elif ideal_perc[i] - 0.2 <= percentages[i] <= ideal_perc[i] + 0.2:
+            coins += 1
+
 
 class itemButton():
     def __init__(self, text, image, x_pos, y_pos, foodtype, status=False):
