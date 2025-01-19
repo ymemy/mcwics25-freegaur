@@ -17,13 +17,19 @@ bar_2 = Bar(6)
 bar_3 = Bar(8)
 
 run = True
-state = "GAME_OVER"
+state = "LEVEL_1"
 level = 1
 coins = 0
 finished = False
 percentages = []
 
 pygame.init()
+pygame.mixer.init()
+
+pygame.mixer.music.load('music/music.mp3') 
+pygame.mixer.music.play(-1)
+
+pop_sound = pygame.mixer.Sound('music/pop.mp3')  
 
 font = pygame.font.Font('freesansbold.ttf', 18)
 pygame.display.set_caption("Food for Thought")
@@ -88,6 +94,7 @@ while run:
                             bar_1.add_item(button)
                 bar_1.check_click()
                 if next_button.check_click() and len(bar_1.items) == 4:
+                    pop_sound.play()
                     points_transition(bar_1)
                     state = "TRANSITION"
     
@@ -113,6 +120,7 @@ while run:
                             bar_2.add_item(button)
                 bar_2.check_click()
                 if next_button.check_click() and len(bar_2.items) == 6:
+                    pop_sound.play()
                     points_transition(bar_2)
                     state = "TRANSITION"
 
@@ -138,6 +146,7 @@ while run:
                             bar_3.add_item(button)
                 bar_3.check_click()
                 if next_button.check_click() and len(bar_3.items) == 8:
+                    pop_sound.play()
                     points_transition(bar_3)
                     state = "TRANSITION"
 
@@ -168,6 +177,7 @@ while run:
                 run = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if next_button.check_click():
+                    pop_sound.play()
                     if level == 3:
                         print("Game over")
                         state = "GAME_OVER"
@@ -190,6 +200,7 @@ while run:
                 run = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if next_button.check_click():
+                    pop_sound.play()
                     state = "MENU"
     
     pygame.display.flip()
