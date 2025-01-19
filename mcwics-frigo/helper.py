@@ -16,7 +16,6 @@ class itemButton():
             dimmed_image.fill((0, 0, 0, 100), special_flags=pygame.BLEND_RGBA_MULT)
             screen.blit(dimmed_image, button_rect)
 
-
         else:
             button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
             screen.blit(self.image, button_rect)
@@ -45,26 +44,21 @@ class itemButton():
         text_rect.top = 10
         screen.blit(identifier_text, text_rect)
 
-class taskButton():
-    def __init__(self, text, x_pos, y_pos, enabled=True):
-        self.text = text
+class nextButton():
+    def __init__(self, image, x_pos, y_pos):
+        self.image = image
         self.x_pos = x_pos
         self.y_pos = y_pos
-        self.enabled = enabled
 
     def draw(self):
-        button_rect = pygame.Rect((self.x_pos, self.y_pos),(150, 25))
-        if self.enabled:
-            if self.check_click():
-                pass # move on to the next stage
-        else:
-            pygame.draw.rect(screen, 'black', button_rect, 0, 5)
+        button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
+        pygame.draw.rect(screen, 'black', button_rect, 0, 5)
 
     def check_click(self):
         mouse_pos = pygame.mouse.get_pos()
         left_click = pygame.mouse.get_pressed()[0]
-        button_rect = pygame.Rect((self.x_pos, self.y_pos),(150, 25))
-        if left_click and button_rect.collidepoint(mouse_pos) and self.enabled:
+        button_rect = self.image.get_rect(topleft=(self.x_pos, self.y_pos))
+        if left_click and button_rect.collidepoint(mouse_pos):
             return True
         else:
             return False

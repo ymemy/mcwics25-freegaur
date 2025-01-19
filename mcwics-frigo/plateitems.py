@@ -17,9 +17,8 @@ class Bar(list):
             item.status = False
 
     def draw(self, screen):
-        # Clear the bar area
         bar_area = pygame.Rect(0, screen.get_height() - 60, screen.get_width(), 60)
-        screen.fill((255, 255, 255), bar_area)  # Assuming white background
+        screen.fill((255, 255, 255), bar_area)
 
         for i, item in enumerate(self.items):
             item_rect = item.image.get_rect(topleft=(i * 60, screen.get_height() - 60))

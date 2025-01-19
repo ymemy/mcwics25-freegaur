@@ -39,4 +39,5 @@ level2_items = {
 
 ## LEVEL 3
 
+level3_items = {}
 
